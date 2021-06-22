@@ -100,24 +100,24 @@ middleProductElem.addEventListener("click", ProductClick);
 rightProductElem.addEventListener("click", ProductClick);
 
 //call functions
-new Product("bag", "./img/bag.jpeg");
-new Product("banana", "./img/banana.jpeg");
-new Product("bathroom", "./img/bathroom.jpeg");
-new Product("boots", "./img/boots.jpeg");
-new Product("breakfast", "./img/breakfast.jpeg");
-new Product("chair", "./img/chair.jpeg");
-new Product("cthulhu", "./img/cthulhu.jpeg");
-new Product("dog-duck", "./img/dog-duck.jpeg");
-new Product("dragon", "./img/dragon.jpeg");
-new Product("pen", "./img/pen.jpeg");
-new Product("pet-sweep", "./img/pet-sweep.jpeg");
-new Product("scissors", "./img/scissors.jpeg");
-new Product("shark", "./img/shark.jpeg");
-new Product("sweep", "./img/sweep.png");
-new Product("tauntaun", "./img/tauntaun.jpeg");
-new Product("unicorn", "./img/unicorn.jpeg");
-new Product("water-can", "./img/water-can.jpeg");
-new Product("wine-glass", "./img/wine-glass.jpeg");
+new Product("R2-D2 Suitcase", "./img/bag.jpeg");
+new Product("Banana Slicer", "./img/banana.jpeg");
+new Product("Bathroom Tablet", "./img/bathroom.jpeg");
+new Product("Open-toed Rain Boots", "./img/boots.jpeg");
+new Product("3-in-1 Toaster Oven", "./img/breakfast.jpeg");
+new Product("Uncomfortable Chair", "./img/chair.jpeg");
+new Product("Cthulhu Figurine", "./img/cthulhu.jpeg");
+new Product("Dog-Duck", "./img/dog-duck.jpeg");
+new Product("Dragon Meat", "./img/dragon.jpeg");
+new Product("Utensil Pens", "./img/pen.jpeg");
+new Product("Pet Sweeper", "./img/pet-sweep.jpeg");
+new Product("Pizza Scissors", "./img/scissors.jpeg");
+new Product("Shark Sleeping Bag (adults)", "./img/shark.jpeg");
+new Product("Baby Sweeper", "./img/sweep.png");
+new Product("Tauntaun Sleeping Bag (kids)", "./img/tauntaun.jpeg");
+new Product("Unicorn Meat", "./img/unicorn.jpeg");
+new Product("Recursive Watering Can", "./img/water-can.jpeg");
+new Product("Wine Glass", "./img/wine-glass.jpeg");
 
 
 pick3Products();
