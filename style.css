@@ -2,6 +2,11 @@ body {
   background-color: #8AD4A0;
 }
 
+#leftProduct, #middleProduct, #rightProduct {
+  display: inline-block;
+  margin-left: 5%;
+}
+
 #button {
   margin-bottom: 20px;
 }

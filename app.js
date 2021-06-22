@@ -1,7 +1,7 @@
 "use strict"
 
 //global variables
-const productSelectorElem = document.getElementById("potential-products");
+const productSelectorElem = document.getElementById("possible-products");
 const leftProductElem = document.getElementById("leftProduct");
 const middleProductElem = document.getElementById("middleProduct");
 const rightProductElem = document.getElementById("rightProduct");
@@ -11,10 +11,10 @@ const middleImgElem = document.getElementById("middleProductImg");
 const middleH2Elem = document.getElementById("middleProductH2");
 const rightImgElem = document.getElementById("rightProductImg");
 const rightH2Elem = document.getElementById("rightProductH2");
-const resultsUlElem = document.getElementById("consumer_results");
+const resultsUlElem = document.getElementById("results");
 let votesCount = 0;
 let timesShownCount = 0;
-Product.potentialProducts = [];
+Product.possibleProducts = [];
 let leftProduct = null;
 let middleProduct = null;
 let rightProduct = null;
@@ -28,7 +28,7 @@ function Product(name, image) {
   this.timesShown = 0;
   this.votes = 0;
 
-  Product.potentialProducts.push(this);
+  Product.possibleProducts.push(this);
 }
 
 //prototype methods
@@ -41,21 +41,21 @@ Product.prototype.renderSingleProduct = function(imgPosition, h2Position) {
 
 //global functions
 function pick3Products() {
-  let leftProductIndex = Math.floor(Math.random() * Product.potentialProducts.length);
-  leftProduct = Product.potentialProducts[leftProductIndex];
-  let middleProductIndex = Math.floor(Math.random() * Product.potentialProducts.length);
-  middleProduct = Product.potentialProducts[middleProductIndex];
+  let leftProductIndex = Math.floor(Math.random() * Product.possibleProducts.length);
+  leftProduct = Product.possibleProducts[leftProductIndex];
+  let middleProductIndex = Math.floor(Math.random() * Product.possibleProducts.length);
+  middleProduct = Product.possibleProducts[middleProductIndex];
 
   while (middleProductIndex === leftProductIndex || middleProductIndex === null) {
-    middleProductIndex = Math.floor(Math.random() * Product.potentialProducts.length);
-    middleProduct = Product.potentialProducts[middleProductIndex];
+    middleProductIndex = Math.floor(Math.random() * Product.possibleProducts.length);
+    middleProduct = Product.possibleProducts[middleProductIndex];
   }
   
-  let rightProductIndex = Math.floor(Math.random() * Product.potentialProducts.length);
-  rightProduct = Product.potentialProducts[rightProductIndex];
+  let rightProductIndex = Math.floor(Math.random() * Product.possibleProducts.length);
+  rightProduct = Product.possibleProducts[rightProductIndex];
   
   while (rightProductIndex === leftProductIndex || middleProductIndex === rightProductIndex || rightProductIndex === null) {
-  rightProductIndex = Math.floor(Math.random() * Product.potentialProducts.length);
+  rightProductIndex = Math.floor(Math.random() * Product.possibleProducts.length);
   }
 
   leftProduct.renderSingleProduct(leftImgElem, leftH2Elem);
@@ -66,7 +66,7 @@ function pick3Products() {
 function renderResults() {
   resultsUlElem.innerHTML = "";
 
-  for (let product of Product.potentialProducts) {
+  for (let product of Product.possibleProducts) {
     let liElem = document.createElement("li");
     liElem.textContent = `${product.name} has ${product.votes} votes`;
     resultsUlElem.appendChild(liElem);
@@ -113,8 +113,8 @@ new Product("pen", "./img/pen.jpeg");
 new Product("pet-sweep", "./img/pet-sweep.jpeg");
 new Product("scissors", "./img/scissors.jpeg");
 new Product("shark", "./img/shark.jpeg");
-new Product("sweep", "./img/sweep.jpeg");
-new Product("tauntaun", "./img/tauntaun");
+new Product("sweep", "./img/sweep.png");
+new Product("tauntaun", "./img/tauntaun.jpeg");
 new Product("unicorn", "./img/unicorn.jpeg");
 new Product("water-can", "./img/water-can.jpeg");
 new Product("wine-glass", "./img/wine-glass.jpeg");
