@@ -1,126 +1,123 @@
-'use strict'
+"use strict"
 
-// global variables
+//global variables
 const productSelectorElem = document.getElementById("potential-products");
-const leftProductElem = document.getElementById("left-product");
-const middleProductElem = document.getElementById("middle-product");
-const rightProductElem = document.getElementById("right-product");
-const leftImageElem = document.getElementById("leftImg");
-const middleImageElem = document.getElementById("middleImg");
-const rightImageElem = document.getElementById("rightImg");
-const leftH2Elem = document.getElementById("leftH2");
-const middleH2Elem = document.getElementById("middleH2");
-const rightH2Elem = document.getElementById("rightH2");
-
-let timesShownCounter = 0;
-let voteCounter = 0;
-
-//array of all potential products
-Products.potentialProducts = [];
-
+const leftProductElem = document.getElementById("leftProduct");
+const middleProductElem = document.getElementById("middleProduct");
+const rightProductElem = document.getElementById("rightProduct");
+const leftImgElem = document.getElementById("leftProductImg");
+const leftH2Elem = document.getElementById("leftProductH2");
+const middleImgElem = document.getElementById("middleProductImg");
+const middleH2Elem = document.getElementById("middleProductH2");
+const rightImgElem = document.getElementById("rightProductImg");
+const rightH2Elem = document.getElementById("rightProductH2");
+const resultsUlElem = document.getElementById("consumer_results");
+let votesCount = 0;
+let timesShownCount = 0;
+Product.potentialProducts = [];
 let leftProduct = null;
 let middleProduct = null;
 let rightProduct = null;
 
-//Product object constructor function
-function Products(name, image){
-  this,name = name;
+
+
+//constructor functions
+function Product(name, image) {
+  this.name = name;
   this.image = image;
   this.timesShown = 0;
   this.votes = 0;
 
-  //push properties put in the "Product" object into "potentialProducts" array
-  Products.potentialProducts.push(this);
+  Product.potentialProducts.push(this);
 }
 
 //prototype methods
-Products.prototype.renderSingleProduct = function(imgPosition, h2Position) {
+Product.prototype.renderSingleProduct = function(imgPosition, h2Position) {
   imgPosition.src = this.image;
-  h2Position.alt = `this is a picture of ${this.name}`;
-  h2Position.textContent= this.name;
+  imgPosition.alt = `this is a picture of a ${this.name}`;
+  h2Position.textContent = this.name;
   this.timesShown++;
 }
 
 //global functions
 function pick3Products() {
-  let leftProductIndex = Math.floor(Math.random() * Products.potentialProducts.length);
-  leftProduct = Products.potentialProducts[leftProductIndex];
-  
-  let middleProductIndex = Math.floor(Math.random() * Products.potentialProducts.length);
-  middleProduct = Products.potentialProducts[middleProductIndex];
+  let leftProductIndex = Math.floor(Math.random() * Product.potentialProducts.length);
+  leftProduct = Product.potentialProducts[leftProductIndex];
+  let middleProductIndex = Math.floor(Math.random() * Product.potentialProducts.length);
+  middleProduct = Product.potentialProducts[middleProductIndex];
+
   while (middleProductIndex === leftProductIndex || middleProductIndex === null) {
-    middleProductIndex = Math.floor(Math.random() * Products.potentialProducts.length);
-    middleProduct = Products.potentialProducts[middleProductIndex]; 
+    middleProductIndex = Math.floor(Math.random() * Product.potentialProducts.length);
+    middleProduct = Product.potentialProducts[middleProductIndex];
+  }
+  
+  let rightProductIndex = Math.floor(Math.random() * Product.potentialProducts.length);
+  rightProduct = Product.potentialProducts[rightProductIndex];
+  
+  while (rightProductIndex === leftProductIndex || middleProductIndex === rightProductIndex || rightProductIndex === null) {
+  rightProductIndex = Math.floor(Math.random() * Product.potentialProducts.length);
   }
 
-  let rightProductIndex = Math.floor(Math.random() * Products.potentialProducts.length);
-  rightProduct = Products.potentialProducts[rightProductIndex];
-  while (rightProductIndex === leftProductIndex || rightProductIndex === middleProductIndex || rightProductIndex === null) {
-    rightProductIndex = Math.floor(Math.random() * Products.potentialProducts.length); 
-  }
-
-  leftProduct.renderSingleProduct(leftImageElem, leftH2Elem);
-  middleProduct.renderSingleProduct(middleImageElem, middleH2Elem);
-  rightProduct.renderSingleProduct(rightImageElem, rightH2Elem);
+  leftProduct.renderSingleProduct(leftImgElem, leftH2Elem);
+  middleProduct.renderSingleProduct(middleImgElem, middleH2Elem);
+  rightProduct.renderSingleProduct(rightImgElem, rightH2Elem);
 }
 
 function renderResults() {
   resultsUlElem.innerHTML = "";
 
-  for (let product of Products.potentialProducts) {
+  for (let product of Product.potentialProducts) {
     let liElem = document.createElement("li");
-    liElem.textContent = `${product.name}: ${product.votes}`;
+    liElem.textContent = `${product.name} has ${product.votes} votes`;
     resultsUlElem.appendChild(liElem);
   }
 }
 
+
 function ProductClick(event) {
   let id = event.target.id;
-  if (voteCounter == 25){
-    renderResults();
+  if (votesCount === 25) {
     return
   }
-  
-  if (id === "leftImg" || id === "middleImg" || id === "rightImg") {
-    voteCounter++;
-    if (id === "leftImg"){
+  if (id === "leftProductImg" || id === "middleProductImg" || id === "rightProductImg") {
+    votesCount++;
+    if (id === "leftProductImg") {
       leftProduct.votes++;
-    }
-    if (id === "middleImg"){
-      middleProduct.votes++;
-    }
-    if (id === "rightImg"){
+    } else if (id === "rightProductImg") {
       rightProduct.votes++;
-    }
+    } else {
+      middleProduct.votes++;
+    } 
     pick3Products();
   } else {
-    alert("Please try again");
+    alert("Please try again.");
   }
 }
 
-//event listener
-leftProductElem.addEventListener("click", ProductClick);
+//Event listener
+leftProductElem.addEventListener("click", ProductClick)
 middleProductElem.addEventListener("click", ProductClick);
 rightProductElem.addEventListener("click", ProductClick);
 
-//create Product objects for each image
-new Products("bag", "./img/bag.jpeg");
-new Products("banana", "./img/banana.jpeg");
-new Products("bathroom", "./img/bathroom.jpeg");
-new Products("boots", "./img/boots.jpeg");
-new Products("breakfast", "./img/breakfast.jpeg");
-new Products("chair", "./img/chair.jpeg");
-new Products("cthulhu", "./img/cthulhu.jpeg");
-new Products("dog-duck", "./img/dog-duck.jpeg");
-new Products("dragon", "./img/dragon.jpeg");
-new Products("pen", "./img/pen.jpeg");
-new Products("pet-sweep", "./img/pet-sweep.jpeg");
-new Products("scissors", "./img/scissors.jpeg");
-new Products("shark", "./img/shark.jpeg");
-new Products("sweep", "./img/sweep.jpeg");
-new Products("tauntaun", "./img/tautaun.jpeg");
-new Products("unicorn", "./img/unicorn.jpeg");
-new Products("water-can", "./img/water-can.jpeg");
-new Products("wine-glass", "./img/wine-glass.jpeg");
+//call functions
+new Product("bag", "./img/bag.jpeg");
+new Product("banana", "./img/banana.jpeg");
+new Product("bathroom", "./img/bathroom.jpeg");
+new Product("boots", "./img/boots.jpeg");
+new Product("breakfast", "./img/breakfast.jpeg");
+new Product("chair", "./img/chair.jpeg");
+new Product("cthulhu", "./img/cthulhu.jpeg");
+new Product("dog-duck", "./img/dog-duck.jpeg");
+new Product("dragon", "./img/dragon.jpeg");
+new Product("pen", "./img/pen.jpeg");
+new Product("pet-sweep", "./img/pet-sweep.jpeg");
+new Product("scissors", "./img/scissors.jpeg");
+new Product("shark", "./img/shark.jpeg");
+new Product("sweep", "./img/sweep.jpeg");
+new Product("tauntaun", "./img/tauntaun");
+new Product("unicorn", "./img/unicorn.jpeg");
+new Product("water-can", "./img/water-can.jpeg");
+new Product("wine-glass", "./img/wine-glass.jpeg");
+
 
 pick3Products();
