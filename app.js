@@ -2,15 +2,15 @@
 
 //global variables
 const productSelectorElem = document.getElementById("possible-products");
-const leftProductElem = document.getElementById("leftProduct");
-const middleProductElem = document.getElementById("middleProduct");
-const rightProductElem = document.getElementById("rightProduct");
+// const leftProductElem = document.getElementById("leftProduct");
+// const middleProductElem = document.getElementById("middleProduct");
+// const rightProductElem = document.getElementById("rightProduct");
 const leftImgElem = document.getElementById("leftProductImg");
-const leftH2Elem = document.getElementById("leftProductH2");
+const leftH3Elem = document.getElementById("leftProductH3");
 const middleImgElem = document.getElementById("middleProductImg");
-const middleH2Elem = document.getElementById("middleProductH2");
+const middleH3Elem = document.getElementById("middleProductH3");
 const rightImgElem = document.getElementById("rightProductImg");
-const rightH2Elem = document.getElementById("rightProductH2");
+const rightH3Elem = document.getElementById("rightProductH3");
 const resultsUlElem = document.getElementById("results");
 let votesCount = 0;
 let timesShownCount = 0;
@@ -18,7 +18,6 @@ Product.possibleProducts = [];
 let leftProduct = null;
 let middleProduct = null;
 let rightProduct = null;
-
 
 
 //constructor functions
@@ -32,35 +31,34 @@ function Product(name, image) {
 }
 
 //prototype methods
-Product.prototype.renderSingleProduct = function(imgPosition, h2Position) {
+Product.prototype.renderSingleProduct = function(imgPosition, H3Position) {
   imgPosition.src = this.image;
-  imgPosition.alt = `this is a picture of a ${this.name}`;
-  h2Position.textContent = this.name;
+  imgPosition.alt = `here is a picture of a ${this.name}`;
+  H3Position.textContent = this.name;
   this.timesShown++;
 }
 
 //global functions
 function pick3Products() {
+  let noProducts = [leftProduct, middleProduct, rightProduct];
+  while (noProducts.includes(leftProduct)) {
   let leftProductIndex = Math.floor(Math.random() * Product.possibleProducts.length);
   leftProduct = Product.possibleProducts[leftProductIndex];
-  let middleProductIndex = Math.floor(Math.random() * Product.possibleProducts.length);
-  middleProduct = Product.possibleProducts[middleProductIndex];
+  }
 
-  while (middleProductIndex === leftProductIndex || middleProductIndex === null) {
-    middleProductIndex = Math.floor(Math.random() * Product.possibleProducts.length);
+  while (middleProduct === leftProduct || middleProduct === rightProduct || noProducts.includes(middleProduct)) {
+    let middleProductIndex = Math.floor(Math.random() * Product.possibleProducts.length);
     middleProduct = Product.possibleProducts[middleProductIndex];
   }
   
+  while (rightProduct === leftProduct || rightProduct === middleProduct || noProducts.includes(rightProduct)) {
   let rightProductIndex = Math.floor(Math.random() * Product.possibleProducts.length);
   rightProduct = Product.possibleProducts[rightProductIndex];
-  
-  while (rightProductIndex === leftProductIndex || middleProductIndex === rightProductIndex || rightProductIndex === null) {
-  rightProductIndex = Math.floor(Math.random() * Product.possibleProducts.length);
   }
 
-  leftProduct.renderSingleProduct(leftImgElem, leftH2Elem);
-  middleProduct.renderSingleProduct(middleImgElem, middleH2Elem);
-  rightProduct.renderSingleProduct(rightImgElem, rightH2Elem);
+  leftProduct.renderSingleProduct(leftImgElem, leftH3Elem);
+  middleProduct.renderSingleProduct(middleImgElem, middleH3Elem);
+  rightProduct.renderSingleProduct(rightImgElem, rightH3Elem);
 }
 
 function renderResults() {
@@ -68,15 +66,16 @@ function renderResults() {
 
   for (let product of Product.possibleProducts) {
     let liElem = document.createElement("li");
-    liElem.textContent = `${product.name} has ${product.votes} votes`;
+    liElem.textContent = `${product.name} has ${product.votes} votes.`;
     resultsUlElem.appendChild(liElem);
   }
 }
 
-
 function ProductClick(event) {
   let id = event.target.id;
-  if (votesCount === 25) {
+  if (votesCount === 5) {
+    // renderResults();
+    // addProductChart();
     return
   }
   if (id === "leftProductImg" || id === "middleProductImg" || id === "rightProductImg") {
@@ -90,14 +89,143 @@ function ProductClick(event) {
     } 
     pick3Products();
   } else {
-    alert("Please try again.");
+    alert("Please click on an image.");
   }
 }
 
+function addProductChart() {
+  const productNamesArray = [];
+  const productVotesArray = [];
+  const productShownArray = [];
+
+  for (let product of Product.possibleProducts) {
+    productNamesArray.push(product.name);
+    productVotesArray.push(product.votes);
+    productShownArray.push(product.timesShown);
+  }
+
+  const ctx = document.getElementById('productChart').getContext('2d');
+  
+  const productChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+          labels: productNamesArray,
+          datasets: [{
+              label: '# of Votes',
+              data: productVotesArray,
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+
+              ],
+              borderColor: [
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+
+              ],
+              borderWidth: 1
+            }, {
+              label: "# of Times Shown",
+              data: productShownArray,
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+                'rgba(255, 99, 132, 0.9)',
+                'rgba(54, 162, 235, 0.9)',
+
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 0.9)',
+              'rgba(54, 162, 235, 0.9)',
+              'rgba(255, 99, 132, 0.9)',
+              'rgba(54, 162, 235, 0.9)',
+              'rgba(255, 99, 132, 0.9)',
+              'rgba(54, 162, 235, 0.9)',
+              'rgba(255, 99, 132, 0.9)',
+              'rgba(54, 162, 235, 0.9)',
+              'rgba(255, 99, 132, 0.9)',
+              'rgba(54, 162, 235, 0.9)',
+              'rgba(255, 99, 132, 0.9)',
+              'rgba(54, 162, 235, 0.9)',
+              'rgba(255, 99, 132, 0.9)',
+              'rgba(54, 162, 235, 0.9)',
+              'rgba(255, 99, 132, 0.9)',
+              'rgba(54, 162, 235, 0.9)',
+              'rgba(255, 99, 132, 0.9)',
+              'rgba(54, 162, 235, 0.9)',
+              'rgba(255, 99, 132, 0.9)',
+              'rgba(54, 162, 235, 0.9)',
+            ],
+            borderWidth: 1
+        }]
+      },
+      options: {
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          }
+      }
+  });
+
+}
 //Event listener
-leftProductElem.addEventListener("click", ProductClick)
-middleProductElem.addEventListener("click", ProductClick);
-rightProductElem.addEventListener("click", ProductClick);
+// leftProductElem.addEventListener("click", ProductClick)
+// middleProductElem.addEventListener("click", ProductClick);
+// rightProductElem.addEventListener("click", ProductClick);
+productSelectorElem.addEventListener("click", ProductClick);
 
 //call functions
 new Product("R2-D2 Suitcase", "./img/bag.jpeg");
@@ -118,6 +246,5 @@ new Product("Tauntaun Sleeping Bag (kids)", "./img/tauntaun.jpeg");
 new Product("Unicorn Meat", "./img/unicorn.jpeg");
 new Product("Recursive Watering Can", "./img/water-can.jpeg");
 new Product("Wine Glass", "./img/wine-glass.jpeg");
-
 
 pick3Products();
