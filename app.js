@@ -245,6 +245,6 @@ new Product("Baby Sweeper", "./img/sweep.png");
 new Product("Tauntaun Sleeping Bag (kids)", "./img/tauntaun.jpeg");
 new Product("Unicorn Meat", "./img/unicorn.jpeg");
 new Product("Recursive Watering Can", "./img/water-can.jpeg");
-new Product("Wine Glass", "./img/wine-glass.jpeg");
+new Product("Spill-sure Wine Glass", "./img/wine-glass.jpeg");
 
 pick3Products();
