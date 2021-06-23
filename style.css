@@ -9,15 +9,9 @@ h1 {
 
 #leftProduct, #middleProduct, #rightProduct {
   display: inline-block;
-  margin-left: 6%;
+  margin-left: 5%;
 }
 
-#button {
- 
-}
-#chart {
-
-}
 
 
 h3 {
