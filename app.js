@@ -2,9 +2,6 @@
 
 //global variables
 const productSelectorElem = document.getElementById("possible-products");
-// const leftProductElem = document.getElementById("leftProduct");
-// const middleProductElem = document.getElementById("middleProduct");
-// const rightProductElem = document.getElementById("rightProduct");
 const leftImgElem = document.getElementById("leftProductImg");
 const leftH3Elem = document.getElementById("leftProductH3");
 const middleImgElem = document.getElementById("middleProductImg");
@@ -73,7 +70,7 @@ function renderResults() {
 
 function ProductClick(event) {
   let id = event.target.id;
-  if (votesCount === 5) {
+  if (votesCount === 25) {
     // renderResults();
     // addProductChart();
     return
@@ -222,9 +219,6 @@ function addProductChart() {
 
 }
 //Event listener
-// leftProductElem.addEventListener("click", ProductClick)
-// middleProductElem.addEventListener("click", ProductClick);
-// rightProductElem.addEventListener("click", ProductClick);
 productSelectorElem.addEventListener("click", ProductClick);
 
 //call functions
