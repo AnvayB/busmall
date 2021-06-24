@@ -18,11 +18,11 @@ let rightProduct = null;
 
 
 //constructor functions
-function Product(name, image) {
+function Product(name, image, timesShown, votes) {
   this.name = name;
   this.image = image;
-  this.timesShown = 0;
-  this.votes = 0;
+  this.timesShown = timesShown;
+  this.votes = votes;
 
   Product.possibleProducts.push(this);
 }
@@ -85,6 +85,7 @@ function ProductClick(event) {
       middleProduct.votes++;
     } 
     pick3Products();
+    storeProducts();
   } else {
     alert("Please click on an image.");
   }
@@ -112,30 +113,24 @@ function addProductChart() {
               data: productVotesArray,
               backgroundColor: [
                 'rgba(255, 99, 132, 0.5)', //pink
-
-
               ],
               borderColor: [
                 'rgba(255, 99, 132, 0.9)', //pink
-                
-
               ],
               borderWidth: 2
-            }, {
+            }, 
+
+            {
               label: "# of Times Shown",
               data: productShownArray,
               backgroundColor: [
                 'rgba(53, 61, 165, 0.5)', //dark blue
-
-
-
-            ],
-            borderColor: [
-              'rgba(53, 61, 165, 0.9)', //dark blue
-
-            ],
-            borderWidth: 2
-        }]
+              ],
+              borderColor: [
+                'rgba(53, 61, 165, 0.9)', //dark blue
+              ],
+              borderWidth: 2
+            }]
       },
       options: {
           scales: {
@@ -147,28 +142,54 @@ function addProductChart() {
   });
 
 }
+
+function storeProducts() {
+  let stringProduct = JSON.stringify(Product.possibleProducts);
+  localStorage.setItem("resultingProducts", stringProduct);
+}
+
+function getProduct() {
+  let availableProducts = localStorage.getItem("resultingProducts");
+  if (availableProducts) {
+    let parseProduct = JSON.parse(availableProducts);
+    console.log(parseProduct);
+    for (let resultingProducts of parseProduct) {
+      console.log(resultingProducts);
+      let name = resultingProducts.name;
+      let image = resultingProducts.image;
+      let timesShown = resultingProducts.timesShown;
+      let votes = resultingProducts.votes;
+      new Product(name, image, timesShown, votes);
+    }
+
+  }
+}
+
 //Event listener
 productSelectorElem.addEventListener("click", ProductClick);
 
-//call functions
-new Product("R2-D2 Suitcase", "./img/bag.jpeg");
-new Product("Banana Slicer", "./img/banana.jpeg");
-new Product("Bathroom Tablet", "./img/bathroom.jpeg");
-new Product("Open-toed Rain Boots", "./img/boots.jpeg");
-new Product("3-in-1 Toaster Oven", "./img/breakfast.jpeg");
-new Product("Meatball Bubblegum", "./img/bubblegum.jpeg");
-new Product("Uncomfortable Chair", "./img/chair.jpeg");
-new Product("Cthulhu Figurine", "./img/cthulhu.jpeg");
-new Product("Dog-Duck", "./img/dog-duck.jpeg");
-new Product("Dragon Meat", "./img/dragon.jpeg");
-new Product("Utensil Pens", "./img/pen.jpeg");
-new Product("Pet Sweeper", "./img/pet-sweep.jpeg");
-new Product("Pizza Scissors", "./img/scissors.jpeg");
-new Product("Shark Sleeping Bag (adults)", "./img/shark.jpeg");
-new Product("Baby Sweeper", "./img/sweep.png");
-new Product("Tauntaun Sleeping Bag (kids)", "./img/tauntaun.jpeg");
-new Product("Unicorn Meat", "./img/unicorn.jpeg");
-new Product("Recursive Watering Can", "./img/water-can.jpeg");
-new Product("Spill-sure Wine Glass", "./img/wine-glass.jpeg");
+getProduct();
 
+//call functions
+if (Product.possibleProducts.length < 1) {
+  new Product("R2-D2 Suitcase", "./img/bag.jpeg",0,0);
+  new Product("Banana Slicer", "./img/banana.jpeg",0,0);
+  new Product("Bathroom Tablet", "./img/bathroom.jpeg",0,0);
+  new Product("Open-toed Rain Boots", "./img/boots.jpeg",0,0);
+  new Product("3-in-1 Toaster Oven", "./img/breakfast.jpeg",0,0);
+  new Product("Meatball Bubblegum", "./img/bubblegum.jpeg",0,0);
+  new Product("Uncomfortable Chair", "./img/chair.jpeg",0,0);
+  new Product("Cthulhu Figurine", "./img/cthulhu.jpeg",0,0);
+  new Product("Dog-Duck", "./img/dog-duck.jpeg",0,0);
+  new Product("Dragon Meat", "./img/dragon.jpeg",0,0);
+  new Product("Utensil Pens", "./img/pen.jpeg",0,0);
+  new Product("Pet Sweeper", "./img/pet-sweep.jpeg",0,0);
+  new Product("Pizza Scissors", "./img/scissors.jpeg",0,0);
+  new Product("Shark Sleeping Bag (adults)", "./img/shark.jpeg",0,0);
+  new Product("Baby Sweeper", "./img/sweep.png",0,0);
+  new Product("Tauntaun Sleeping Bag (kids)", "./img/tauntaun.jpeg",0,0);
+  new Product("Unicorn Meat", "./img/unicorn.jpeg",0,0);
+  new Product("Recursive Watering Can", "./img/water-can.jpeg",0,0);
+  new Product("Spill-sure Wine Glass", "./img/wine-glass.jpeg",0,0);
+}
 pick3Products();
