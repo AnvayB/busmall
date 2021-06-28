@@ -17,7 +17,7 @@ let middleProduct = null;
 let rightProduct = null;
 
 
-//constructor functions
+//constructor function for each product
 function Product(name, image, timesShown, votes) {
   this.name = name;
   this.image = image;
@@ -27,7 +27,7 @@ function Product(name, image, timesShown, votes) {
   Product.possibleProducts.push(this);
 }
 
-//prototype methods
+//prototype method to create an image
 Product.prototype.renderSingleProduct = function(imgPosition, H3Position) {
   imgPosition.src = this.image;
   imgPosition.alt = `here is a picture of a ${this.name}`;
@@ -35,7 +35,7 @@ Product.prototype.renderSingleProduct = function(imgPosition, H3Position) {
   this.timesShown++;
 }
 
-//global functions
+//global function to randomly generate 3 product images
 function pick3Products() {
   let noProducts = [leftProduct, middleProduct, rightProduct];
   while (noProducts.includes(leftProduct)) {
@@ -58,6 +58,7 @@ function pick3Products() {
   rightProduct.renderSingleProduct(rightImgElem, rightH3Elem);
 }
 
+//global function to create bulleted list
 function renderResults() {
   resultsUlElem.innerHTML = "";
 
@@ -68,11 +69,10 @@ function renderResults() {
   }
 }
 
+//global function to increase count if an image is clicked
 function ProductClick(event) {
   let id = event.target.id;
   if (votesCount === 25) {
-    // renderResults();
-    // addProductChart();
     return
   }
   if (id === "leftProductImg" || id === "middleProductImg" || id === "rightProductImg") {
@@ -91,6 +91,7 @@ function ProductClick(event) {
   }
 }
 
+//global function to create bar chart using Chart.js
 function addProductChart() {
   const productNamesArray = [];
   const productVotesArray = [];
@@ -112,7 +113,7 @@ function addProductChart() {
               label: '# of Votes',
               data: productVotesArray,
               backgroundColor: [
-                'rgba(255, 99, 132, 0.5)', //pink
+                'rgba(255, 99, 132, 0.6)', //pink
               ],
               borderColor: [
                 'rgba(255, 99, 132, 0.9)', //pink
@@ -124,7 +125,7 @@ function addProductChart() {
               label: "# of Times Shown",
               data: productShownArray,
               backgroundColor: [
-                'rgba(53, 61, 165, 0.5)', //dark blue
+                'rgba(53, 61, 165, 0.6)', //dark blue
               ],
               borderColor: [
                 'rgba(53, 61, 165, 0.9)', //dark blue
@@ -143,13 +144,16 @@ function addProductChart() {
 
 }
 
+//global function to store counts in localStorage
 function storeProducts() {
   let stringProduct = JSON.stringify(Product.possibleProducts);
   localStorage.setItem("resultingProducts", stringProduct);
 }
 
+//global function to present stored count values
 function getProduct() {
   let availableProducts = localStorage.getItem("resultingProducts");
+  //checks if there are contents in availableProducts
   if (availableProducts) {
     let parseProduct = JSON.parse(availableProducts);
     console.log(parseProduct);
@@ -170,7 +174,7 @@ productSelectorElem.addEventListener("click", ProductClick);
 
 getProduct();
 
-//call functions
+//call functions for each created Product
 if (Product.possibleProducts.length < 1) {
   new Product("R2-D2 Suitcase", "./img/bag.jpeg",0,0);
   new Product("Banana Slicer", "./img/banana.jpeg",0,0);
